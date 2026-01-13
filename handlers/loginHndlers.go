@@ -26,9 +26,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		Name:     "token",
 		Value:    jwtToken,
 		HttpOnly: true,
-		Secure:   false,
+		Secure:   true,
 		Path:     "/",
-		SameSite: http.SameSiteStrictMode,
+		SameSite: http.SameSiteNoneMode,
 		Expires:  time.Now().Add(24 * time.Hour),
 	})
 
