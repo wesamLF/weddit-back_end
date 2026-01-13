@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"Weddit_back-end/util"
 	"context"
 	"fmt"
 	"log"
@@ -21,7 +20,6 @@ const UsernameKey ContextKeyUserName = "username"
 func ValidateToken(next http.Handler) http.Handler {
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		util.EnableCors(w, r)
 
 		var JWTsecret = os.Getenv("JWT_SECRET")
 
