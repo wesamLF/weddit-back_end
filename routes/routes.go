@@ -25,26 +25,7 @@ func SetUpRoutes() *http.ServeMux {
 	mux.HandleFunc("GET /comments/user/{username}", handlers.GetCommentsByUsernameHandler)
 	mux.Handle("DELETE /comment/{id}", middleware.ValidateToken(http.HandlerFunc(handlers.DeleteCommentHandler)))
 	mux.Handle("PUT /comment/{id}", middleware.ValidateToken(http.HandlerFunc(handlers.UpdateCommentHandler)))
-
-	//
-	///
-	////
-	/////
-	//////
-	///////
-	////////
-	///////
-	//////
-	/////
-	////
-	///
-	//
 	mux.HandleFunc("GET /posts/{pagenumber}", handlers.GetPostsPaginationHandler)
-
-	mux.HandleFunc("POST /test", handlers.Test)
-
-	// mux.HandleFunc("POST /testjwt", handlers.TestJWT)
-	// mux.Handle("/parsejwt", middleware.ValidateToken(http.HandlerFunc(handlers.TestJWTpar)))
 
 	return mux
 }
