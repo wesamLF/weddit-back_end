@@ -70,7 +70,6 @@ func InsertOnePost(title string, desc string, ownerUsername string, ownerid prim
 	if err != nil {
 		return nil, fmt.Errorf("could not store the post")
 	}
-	fmt.Println("resualt :", myPost)
 
 	return &myPost, nil
 }

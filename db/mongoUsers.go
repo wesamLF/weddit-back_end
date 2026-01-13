@@ -46,7 +46,6 @@ func SinginToDB(myUser models.User) error {
 		if err != nil {
 			return fmt.Errorf("errort")
 		}
-		fmt.Println("account created")
 
 		return nil
 	}

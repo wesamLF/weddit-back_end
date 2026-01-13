@@ -4,13 +4,13 @@ import (
 	"Weddit_back-end/util"
 	"context"
 	"fmt"
+	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
-
-var Secret_key = "posodu33333"
 
 type ContextKeyUserId string
 type ContextKeyUserName string
@@ -20,14 +20,14 @@ const UsernameKey ContextKeyUserName = "username"
 
 func ValidateToken(next http.Handler) http.Handler {
 
-	fmt.Println("in middle ware")
-
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		util.EnableCors(w, r)
 
-		// var test *int
-		// json.NewDecoder(r.Body).Decode(&test)
-		fmt.Println("in cors authh")
+		var JWTsecret = os.Getenv("JWT_SECRET")
+
+		if JWTsecret == "" {
+			log.Fatal("JWT_SECRET is not set")
+		}
 		cookie, err := r.Cookie("token")
 		if err != nil {
 			fmt.Println("in Missing cookie")
@@ -45,7 +45,7 @@ func ValidateToken(next http.Handler) http.Handler {
 
 				return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
 			}
-			return []byte(Secret_key), nil
+			return []byte(JWTsecret), nil
 		})
 
 		if err != nil || !token.Valid {
@@ -63,10 +63,6 @@ func ValidateToken(next http.Handler) http.Handler {
 			}
 			userID := claims["sub"]
 			userName := claims["ownerusername"]
-
-			// Save to context
-			fmt.Println("userID userIDuserID", userID)
-			fmt.Println("claimsclaimsclaims", claims)
 
 			ctx := context.WithValue(r.Context(), UserIDKey, userID)
 			ctx = context.WithValue(ctx, UsernameKey, userName)

@@ -5,7 +5,6 @@ import (
 	"Weddit_back-end/middleware"
 	"Weddit_back-end/models"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -373,23 +372,5 @@ func UpdatePostHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(Response{
 		Message: "post has been updated",
 	})
-
-}
-
-func Test(w http.ResponseWriter, r *http.Request) {
-	var myPost models.Post
-	err := json.NewDecoder(r.Body).Decode(&myPost)
-	if myPost.Title == "" {
-		fmt.Fprintln(w, "emptyyyyy")
-		return
-	}
-	if err != nil {
-		fmt.Println("rrororor")
-
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
-		return
-	}
-	fmt.Println(myPost)
-	fmt.Fprintln(w, myPost)
 
 }
